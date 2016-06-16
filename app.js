@@ -33,6 +33,16 @@
 
   });
 
+  app.controller('ReviewController', function(){
+    this.review = {};
+
+    this.addReview = function(product){
+      this.review.created = Date.now();
+      product.reviews.push(this.review);
+      this.review = {};
+    };
+  });
+
   var gems = [
     {
       name: 'Dodecahedron',
@@ -42,6 +52,22 @@
       images: [
           'https://github.com/sirodoht/angular-gemstore/blob/gh-pages/images/gem-01.gif?raw=true',
           'https://github.com/sirodoht/angular-gemstore/blob/gh-pages/images/gem-03.gif?raw=true',
+      ],
+      reviews: [
+        {
+          stars: 5,
+          body: "This one is the bestest",
+          author: "not-the-store-owner",
+        },
+        {
+          stars: 4,
+          body: "I was satisfied",
+          author: "KellinYella",
+        },
+        {
+          stars: 2,
+          body: "tasted aweful",
+        },
       ],
     },
     {
@@ -53,6 +79,22 @@
           'https://github.com/sirodoht/angular-gemstore/blob/gh-pages/images/gem-02.gif?raw=true',
           'https://github.com/sirodoht/angular-gemstore/blob/gh-pages/images/gem-04.gif?raw=true',
       ],
+      reviews: [
+        {
+          stars: 3,
+          body: "Would buy again if I had to",
+          author: "SamW",
+        },
+        {
+          stars: 4,
+          body: "very satisfied, but poor service",
+          author: "TheDevil",
+        },
+        {
+          stars: 2,
+          body: "tasted aweful as well",
+        },
+      ],
     },
     {
       name: 'Azurite',
@@ -63,7 +105,8 @@
       rarity: 7,
       color: '#CCC',
       faces: 14,
-      images: [ ]
+      images: [ ],
+      reviews: [],
     },
   ];
 

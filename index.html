@@ -3,6 +3,7 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body ng-controller="StoreController as store">
@@ -23,7 +24,7 @@
               <ul class="img-thumbnails clearfix">
                 <li class="small-image pull-left thumbnail" style="width: 40px;" ng-repeat="image in product.images">
                   <!-- how to dynamically set this up  -->
-                  <a href ng-click="gallery.setCurrent(1)">
+                  <a href ng-click="gallery.setCurrent($index)">
                     <img  ng-src="{{image}}">
                   </a>
                 </li>
@@ -46,7 +47,44 @@
             </div>
             <div class="panel" ng-show="panel.isSelected(3)">
                 <h3>Reviews</h3>
-                <blockquote>None yet</blockquote>
+                <blockquote ng-repeat="review in product.reviews">
+                  <b>Stars: {{review.stars}}</b></br>
+                  "{{review.body}}"</br>
+                  <cite ng-show="review.author">by: {{review.author}}</cite>
+
+                </blockquote>
+
+                <form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
+
+                  <blockquote>
+                    <p>Preview</p>
+                    <b>Stars: {{reviewCtrl.review.stars}}</b></br>
+                    "{{reviewCtrl.review.body}}"</br>
+                    <cite ng-show="reviewCtrl.review.author">by: {{reviewCtrl.review.author}}</cite>
+
+                  </blockquote>
+
+                  <fieldset class="form-group">
+                    <label for="stars">Rate Item</label>
+                    <select class="form-control" id="stars" ng-model="reviewCtrl.review.stars" required>
+                      <option ng-repeat="i in [1,2,3,4,5]" value="{{i}}">{{i}} Stars</option>
+                    </select>
+                  </fieldset>
+
+                  <fieldset class="form-group">
+                    <textarea class="form-control" ng-model="reviewCtrl.review.body" required></textarea>
+                  </fieldset>
+
+                  <fieldset class="form-group">
+                    <label for="email">By:</label>
+                    <input type="email" id="email" class="form-control" ng-model="reviewCtrl.review.author" />
+                  </fieldset>
+
+                  <fieldset class="form-group">
+                    <input class="btn btn-warning" type="submit" value="Submit" />
+                  </fieldset>
+
+                </form>
             </div>
             <button class="btn btn-primary" ng-show="product.canPurchase">Add to Cart</button>
 
